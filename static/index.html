@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Center Live Analytics</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="container">
+        <!-- KPI Grid (8 cards) -->
+        <section class="kpi-grid" id="kpiGrid">
+            <div class="kpi-card">
+                <span class="kpi-icon">⏳</span>
+                <span class="kpi-label">Longest Call Waiting</span>
+                <span class="kpi-value" id="longestWait">--</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-icon">📞</span>
+                <span class="kpi-label">Current Call Waiting</span>
+                <span class="kpi-value" id="currentWaiting">--</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-icon">🗣️</span>
+                <span class="kpi-label">Average Talk Time</span>
+                <span class="kpi-value" id="avgTalkTime">--</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-icon">📊</span>
+                <span class="kpi-label">Total Calls Today</span>
+                <span class="kpi-value" id="totalCalls">--</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-icon">✅</span>
+                <span class="kpi-label">Agent Ready</span>
+                <span class="kpi-value" id="agentReady">--</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-icon">👥</span>
+                <span class="kpi-label">Agent Logged In</span>
+                <span class="kpi-value" id="agentLogged">--</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-icon">⏱️</span>
+                <span class="kpi-label">ASA (seconds)</span>
+                <span class="kpi-value" id="asaSeconds">--</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-icon">🚫</span>
+                <span class="kpi-label">Abandoned Today</span>
+                <span class="kpi-value" id="abandoned">--</span>
+            </div>
+        </section>
+
+        <!-- Agent Status Section -->
+        <section class="agent-status-grid" id="agentStatusGrid">
+            <div class="glass-card agent-card">
+                <span class="status-icon">👥</span>
+                <span class="status-label">Agents présents</span>
+                <span class="status-value" id="agentActual">--</span>
+            </div>
+            <div class="glass-card agent-card">
+                <span class="status-icon">☕</span>
+                <span class="status-label">Pause 15 min</span>
+                <span class="status-value" id="agentBreak15">--</span>
+                <span class="status-sub" id="break15Return"></span>
+            </div>
+            <div class="glass-card agent-card">
+                <span class="status-icon">🍽️</span>
+                <span class="status-label">Pause 1 h</span>
+                <span class="status-value" id="agentBreak60">--</span>
+                <span class="status-sub" id="break60Return"></span>
+            </div>
+            <div class="glass-card agent-card">
+                <span class="status-icon">⏳</span>
+                <span class="status-label">Appels > 420 s</span>
+                <span class="status-value" id="agentOverAHT">--</span>
+            </div>
+            <div class="glass-card agent-card">
+                <span class="status-icon">⏰</span>
+                <span class="status-label">En retard</span>
+                <span class="status-value" id="agentLate">--</span>
+            </div>
+            <div class="glass-card agent-card">
+                <span class="status-icon">🏁</span>
+                <span class="status-label">Shift terminé</span>
+                <span class="status-value" id="agentFinished">--</span>
+            </div>
+        </section>
+
+        <!-- Main dashboard row -->
+        <div class="main-row">
+            <section class="chart-panel glass-card">
+                <h2>Active & On Hold Calls</h2>
+                <div class="chart-container">
+                    <canvas id="liveChart"></canvas>
+                </div>
+            </section>
+
+            <div class="right-panel">
+                <div class="glass-card alert-card">
+                    <h3>Service Level</h3>
+                    <div class="sla-display">
+                        <span class="sla-score" id="slaScore">--</span>
+                        <span class="sla-label">/ Today</span>
+                    </div>
+                    <div class="sla-detail" id="slaDetail">Calls answered within 20s</div>
+                </div>
+
+                <div class="glass-card gauge-card">
+                    <h3>Volume Actuel</h3>
+                    <div class="gauge-container">
+                        <canvas id="gaugeChart"></canvas>
+                        <div class="gauge-values">
+                            <div><strong id="gaugeActive">--</strong><span>Active</span></div>
+                            <div><strong id="gaugeWaiting">--</strong><span>Waiting</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- Predictions & Planning Section -->
+        <section class="predictions-section">
+            <!-- 24h Forecast Chart -->
+            <div class="glass-card forecast-card">
+                <h2>📈 Prévisions de Flux – Prochaines 24h</h2>
+                <div class="chart-container">
+                    <canvas id="forecastChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Weekly Planning Table -->
+            <div class="glass-card planning-card">
+                <h2>📅 Planification Hebdomadaire (Agents requis – pic)</h2>
+                <div class="table-responsive">
+                    <table class="neon-table">
+                        <thead>
+                            <tr>
+                                <th>Jour</th>
+                                <th>Volume Total</th>
+                                <th>Agents Net (pic)</th>
+                                <th>Agents Brut (pic)</th>
+                                <th>SLA cible</th>
+                            </tr>
+                        </thead>
+                        <tbody id="weeklyTableBody">
+                            <!-- Rempli dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    <script src="/static/app.js"></script>
+</body>
+</html>

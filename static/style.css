@@ -1,0 +1,314 @@
+/* Glassmorphism Dark Theme with Neon Accents */
+:root {
+    --bg-deep: #080c0c;
+    --glass-bg: rgba(15, 25, 25, 0.35);
+    --glass-border: rgba(0, 255, 200, 0.15);
+    --text-primary: #e0f0f0;
+    --text-secondary: #90a0a0;
+    --neon-cyan: #00f2fe;
+    --neon-green: #00ff88;
+    --neon-magenta: #f355da;
+    --neon-orange: #ffaa00;
+    --neon-red: #ff3366;
+    --glow-cyan: 0 0 8px rgba(0, 242, 254, 0.5);
+    --glow-green: 0 0 8px rgba(0, 255, 136, 0.5);
+    --card-radius: 20px;
+    --blur-amount: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+.glass-bg {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 40%, rgba(0,255,136,0.03) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(0,242,254,0.03) 0%, transparent 50%);
+    z-index: -1;
+    animation: float 20s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* KPI Grid */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.kpi-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-amount));
+    -webkit-backdrop-filter: blur(var(--blur-amount));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--card-radius);
+    padding: 1.2rem 1rem;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    color: #fff;
+}
+
+.kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--glow-cyan), 0 8px 20px rgba(0,0,0,0.5);
+}
+
+.kpi-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.kpi-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 0.3rem;
+}
+
+.kpi-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: var(--glow-cyan);
+}
+
+/* Agent Status Grid */
+.agent-status-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.agent-card {
+    text-align: center;
+    padding: 1rem;
+}
+
+.status-icon {
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.status-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.status-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: var(--glow-cyan);
+}
+
+.status-sub {
+    font-size: 0.75rem;
+    color: var(--neon-cyan);
+    display: block;
+    margin-top: 0.2rem;
+}
+
+/* Main row */
+.main-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-amount));
+    -webkit-backdrop-filter: blur(var(--blur-amount));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--card-radius);
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    overflow: hidden;
+}
+
+.chart-panel h2 {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: var(--neon-cyan);
+}
+
+.chart-container {
+    height: 300px;
+    overflow: hidden;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.alert-card h3 {
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    color: var(--neon-orange);
+}
+
+.sla-display {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--neon-green);
+    text-shadow: var(--glow-green);
+}
+
+.sla-label {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.sla-detail {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.gauge-card h3 {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--neon-magenta);
+}
+
+.gauge-container {
+    position: relative;
+    text-align: center;
+    height: 220px;
+    overflow: hidden;
+}
+
+.gauge-values {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 0.8rem;
+}
+
+.gauge-values div {
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.gauge-values strong {
+    font-size: 1.4rem;
+    display: block;
+    color: var(--neon-cyan);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .agent-status-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .main-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+    .agent-status-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Predictions & Planning */
+.predictions-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.forecast-card h2,
+.planning-card h2 {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: var(--neon-cyan);
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.neon-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--text-primary);
+}
+
+.neon-table th {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    padding: 0.8rem 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.neon-table td {
+    padding: 0.7rem 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.95rem;
+}
+
+.neon-table tbody tr:hover {
+    background: rgba(0, 255, 136, 0.05);
+}
+
+.neon-table .highlight {
+    color: var(--neon-green);
+    font-weight: 700;
+    text-shadow: var(--glow-green);
+}
+
+@media (max-width: 1024px) {
+    .predictions-section {
+        grid-template-columns: 1fr;
+    }
+}
